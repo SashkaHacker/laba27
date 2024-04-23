@@ -7,5 +7,5 @@ if __name__ == "__main__":
     try:
         a, b = int(a), int(b)
         print(f"Результат: {a + b}")
-    except ValueError as e:
+    except ValueError:
         print(f"Результат: {a + b}")

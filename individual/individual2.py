@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 import json
 import logging
 from datetime import datetime
@@ -107,21 +108,20 @@ def show_workers(lst):
         print("Список работников пуст.")
 
 
-def main(command_line=None):
+def main():
     logger = logging.getLogger(__name__)
     logging.basicConfig(
-        filename="individual1.log", encoding="utf-8", level=logging.DEBUG
+        filename="individual2.log", encoding="utf-8", level=logging.DEBUG
     )
     filename = input("Укажите файл (опционально): ")
-
+    logger.info(f"{datetime.now()} Запуск программы.")
     is_dirty = False
 
     # Файл по умолчанию
     if filename == "":
         filename = "data.json"
 
-    # Домашняя директория для сохранения файла
-    path_to_home = Path.home().joinpath(filename)
+    path_to_home = Path(filename)
     if path_to_home.exists():
         lst = load_workers(path_to_home)
     else:
@@ -132,7 +132,7 @@ def main(command_line=None):
         command = input("Введите команду: ").lower()
         match command:
             case "exit":
-                logger.info("Прекращена работа программы.")
+                logger.info(f"{datetime.now()} Прекращена работа программы.")
                 break
             case "add":
                 surname = input("Введите фамилию: ")
@@ -142,28 +142,36 @@ def main(command_line=None):
                 is_dirty = True
                 result = add_worker(lst, surname, name, numbers, date)
                 if result:
-                    logger.error("Ошибка в воде данных.")
+                    logger.error(f"{datetime.now()} Ошибка в воде данных.")
                     print(result)
                 else:
-                    logger.info(f"Добавление сотрудника {surname} {name}")
+                    logger.info(
+                        f"{datetime.now()} Добавление сотрудника {surname}"
+                        f" {name}"
+                    )
             case "select":
                 numbers = input("Введите номер телефона: ")
                 result = phone(lst, numbers)
                 if result:
                     print(result)
-                    logger.error("Номер указан неверно.")
+                    logger.error(f"{datetime.now()} Номер указан не верно.")
                 else:
                     logger.info(
-                        "Выведен сотрудник по номеру телефона: {numbers}."
+                        f"{datetime.now()} "
+                        f"Выведен сотрудник по номеру телефона: {numbers}."
                     )
             case "help":
                 instruction()
-                logger.info("Выведена справочная информация.")
+                logger.info(f"{datetime.now()} Выведена справочная информация.")
             case "list":
                 show_workers(lst)
-                logger.info("Выведена информация о всех сотрудниках.")
+                logger.info(
+                    f"{datetime.now()} Выведена информация о всех сотрудниках."
+                )
             case _:
-                logger.error(f"Введена неверная команда: {command}")
+                logger.error(
+                    f"{datetime.now()} Введена неверная команда: {command}"
+                )
                 print(f"Неизвестная команда {command}")
 
     if is_dirty:
