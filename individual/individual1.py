@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Выполнить индивидуальное задание 1 лабораторной работы 2.19, добавив возможность работы с
+# исключениями и логгирование.
+
+
 import json
 import logging
 from datetime import datetime
